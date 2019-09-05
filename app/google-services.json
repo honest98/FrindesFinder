@@ -1,0 +1,85 @@
+{
+  "project_info": {
+    "project_number": "755348896268",
+    "firebase_url": "https://friends-finder-169e0.firebaseio.com",
+    "project_id": "friends-finder-169e0",
+    "storage_bucket": "friends-finder-169e0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:755348896268:android:323c13b797e19018bd0c29",
+        "android_client_info": {
+          "package_name": "com.example.android.FriendsFinder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "755348896268-169r41h3k8ab1iegns43cl79lps8g24p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.android.FriendsFinder",
+            "certificate_hash": "a0670cd90e77294a80a8bd2f6669df6bbead670b"
+          }
+        },
+        {
+          "client_id": "755348896268-sj17tno4ut1bsuve7hhae2btvuc14i1u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAIORoqbWH0tmznfYchR_BQoe1v_9eCZkM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "755348896268-sj17tno4ut1bsuve7hhae2btvuc14i1u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:755348896268:android:1b2de0f39f3af7d3",
+        "android_client_info": {
+          "package_name": "com.example.android.mapstest"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "755348896268-79nbfbja3gcq0t2capqetaspt6iosjv6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.android.mapstest",
+            "certificate_hash": "26e7ed52b6c52f11c8159375754701c936fe058f"
+          }
+        },
+        {
+          "client_id": "755348896268-sj17tno4ut1bsuve7hhae2btvuc14i1u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAIORoqbWH0tmznfYchR_BQoe1v_9eCZkM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "755348896268-sj17tno4ut1bsuve7hhae2btvuc14i1u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
