@@ -16,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Location Service"
-            android:textColor="#000"
+            android:textColor="#FF4500"
             android:textSize="18sp" />
 
         <Switch
@@ -39,14 +39,16 @@
         android:layout_marginBottom="16dp"
         android:background="@drawable/btn_rounded"
         android:onClick="find"
-        android:text="find" />
+        android:text="find"
+        android:textColor="#fff" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/btn_rounded"
         android:onClick="showAllFriends"
-        android:text="show all friends" />
+        android:text="show all friends"
+        android:textColor="#fff" />
 
 
 </LinearLayout>

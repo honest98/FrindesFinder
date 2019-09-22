@@ -1,5 +1,7 @@
 package com.example.android.FriendsFinder;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
 
@@ -9,22 +11,36 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.android.FriendsFinder.model.FriendInfo;
+import com.example.android.FriendsFinder.view.FriendsAdapter;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private View view;
+    FirebaseDatabase database;
+    DatabaseReference myRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+
+        database = FirebaseDatabase.getInstance();
+        String userid = getIntent().getStringExtra("userId");
+        myRef = database.getReference("userProfile").child(userid);
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -55,13 +71,51 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         double lat = getIntent().getDoubleExtra("lat", 0);
         double lng = getIntent().getDoubleExtra("lng", 0);
-            String friendName = getIntent().getStringExtra("friend");
+            final String friendName = getIntent().getStringExtra("friend");
+
+//        myRef.addChildEventListener(new ChildEventListener() {
+//                                        @Override
+//                                        public void onChildAdded(@NonNull DataSnapshot dataSnapshot,@Nullable String s) {
+//                                            Double lat = Double.parseDouble(dataSnapshot.child("Latitude").getValue(String.class));
+//                                            Double lng = Double.parseDouble(dataSnapshot.child("Longitude").getValue(String.class));
+//                                            LatLng friendPosition = new LatLng(lat,lng);
+//                                            mMap.addMarker(new MarkerOptions().position(friendPosition).title(friendName));
+//                                            mMap.moveCamera(CameraUpdateFactory.newLatLng(friendPosition));
+//                                        }
+//
+//                                        @Override
+//                                        public void onChildChanged(@NonNull DataSnapshot dataSnapshot,@Nullable String s) {
+//                                            Double lat = Double.parseDouble(dataSnapshot.child("Latitude").getValue(String.class));
+//                                            Double lng = Double.parseDouble(dataSnapshot.child("Longitude").getValue(String.class));
+//                                            LatLng friendPosition = new LatLng(lat,lng);
+//                                            mMap.addMarker(new MarkerOptions().position(friendPosition).title(friendName));
+//                                            mMap.moveCamera(CameraUpdateFactory.newLatLng(friendPosition));
+//                                        }
+//
+//                                        @Override
+//                                        public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+//
+//                                        }
+//
+//                                        @Override
+//                                        public void onChildMoved(@NonNull DataSnapshot dataSnapshot,@Nullable String s) {
+//
+//                                        }
+//
+//                                        @Override
+//                                        public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//                                        }
+//                                    });
 
 
-//             Add a marker in Sydney and move the camera
-            LatLng friendPosition = new LatLng(lat,lng);
+                //             Add a marker in Sydney and move the camera
+                LatLng friendPosition = new LatLng(lat,lng);
             mMap.addMarker(new MarkerOptions().position(friendPosition).title(friendName));
             mMap.moveCamera(CameraUpdateFactory.newLatLng(friendPosition));
+
+
+
 //        } else {
 //
 ////             Add a marker in Sydney and move the camera
@@ -89,4 +143,5 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
         mMap.setMyLocationEnabled(true);
     }
+
 }

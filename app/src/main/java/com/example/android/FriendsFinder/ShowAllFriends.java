@@ -5,15 +5,12 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.room.Room;
 
 import android.os.Bundle;
 import android.widget.Toast;
 
 
 import com.example.android.FriendsFinder.model.FriendInfo;
-import com.example.android.FriendsFinder.roomDb.Friends;
-import com.example.android.FriendsFinder.roomDb.FriendsDatabase;
 import com.example.android.FriendsFinder.view.FriendsAdapter;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -34,8 +31,6 @@ public class ShowAllFriends extends AppCompatActivity {
 
     ArrayList<String> mKey;
 
-    FriendsDatabase friendsDatabase;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,67 +50,39 @@ public class ShowAllFriends extends AppCompatActivity {
 
         recyclerView.setHasFixedSize(true);
 
-        friendsDatabase = Room.databaseBuilder(this,
-                FriendsDatabase.class,"database2").allowMainThreadQueries().build();
-
         getLive();
 
 
     }
 
 
-    public void getData() {
-
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    String name = ds.child("userName").getValue().toString();
-                    String email = ds.child("email").getValue().toString();
-                    String imageUrl = ds.child("imageUrl").getValue().toString();
-                    Double lat = Double.valueOf(ds.child("Latitude").getValue().toString());
-                    Double lng = Double.valueOf(ds.child("Longitude").getValue().toString());
-
-                    arrayList.add(new FriendInfo(name,lat,lng,email,imageUrl));
-                }
-
-
-                adapter = new FriendsAdapter(getApplicationContext(),arrayList);
-                recyclerView.setAdapter(adapter);
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-    }
 
 
     public void getLive() {
         myRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot,@Nullable String s) {
-                String name = dataSnapshot.child("userName").getValue().toString();
-                String email = dataSnapshot.child("email").getValue().toString();
-                String imageUrl = dataSnapshot.child("imageUrl").getValue().toString();
-                Double lat = Double.valueOf(dataSnapshot.child("Latitude").getValue().toString());
-                Double lng = Double.valueOf(dataSnapshot.child("Longitude").getValue().toString());
+                String name = dataSnapshot.child("userName").getValue(String.class);
+                String email = dataSnapshot.child("email").getValue(String.class);
+                String imageUrl = dataSnapshot.child("imageUrl").getValue(String.class);
+                String userId = dataSnapshot.child("userId").getValue(String.class);
+
+                Double lat = 0.0;
+                Double lng = 0.0;
+
+                try {
+                    lat = Double.valueOf(dataSnapshot.child("Latitude").getValue(String.class));
+                    lng = Double.valueOf(dataSnapshot.child("Longitude").getValue(String.class));
+                }catch (Exception e){
+                Toast.makeText(ShowAllFriends.this,"Exception: " + e.getMessage(),Toast.LENGTH_SHORT).show();
+            }
+
 
                 String key = dataSnapshot.getKey();
                 mKey.add(key);
 
-                FriendInfo friendInfo = new FriendInfo(name,lat,lng,email,imageUrl);
-                Friends friends = new Friends(name,lat,lng,email,imageUrl);
+                FriendInfo friendInfo = new FriendInfo(name,lat,lng,email,imageUrl, userId);
 
-                try {
-                    friendsDatabase.friendsDao().insertAll(friends);
-                } catch (Exception e) {
-                    Toast.makeText(getApplicationContext(),"Exception " + e.getMessage(),Toast.LENGTH_LONG).show();
-                }
                 arrayList.add(friendInfo);
 
                 adapter = new FriendsAdapter(ShowAllFriends.this,arrayList);
@@ -134,11 +101,12 @@ public class ShowAllFriends extends AppCompatActivity {
                 String name = dataSnapshot.child("userName").getValue(String.class);
                 String email = dataSnapshot.child("email").getValue(String.class);
                 String imageUrl = dataSnapshot.child("imageUrl").getValue(String.class);
+                String userId = dataSnapshot.child("userId").getValue(String.class);
                 Double lat = Double.valueOf(dataSnapshot.child("Latitude").getValue(String.class));
                 Double lng = Double.valueOf(dataSnapshot.child("Longitude").getValue(String.class));
 
                 arrayList.remove(index);
-                arrayList.add(index,new FriendInfo(name,lat,lng,email,imageUrl));
+                arrayList.add(index,new FriendInfo(name,lat,lng,email,imageUrl, userId));
 
 
                 adapter = new FriendsAdapter(ShowAllFriends.this,arrayList);
@@ -170,6 +138,41 @@ public class ShowAllFriends extends AppCompatActivity {
             }
         });
 
+
+    }
+
+
+
+
+
+    public void getData() {
+
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    String name = ds.child("userName").getValue(String.class);
+                    String email = ds.child("email").getValue(String.class);
+                    String imageUrl = ds.child("imageUrl").getValue(String.class);
+                    String userId = dataSnapshot.child("userId").getValue(String.class);
+                    Double lat = Double.valueOf(ds.child("Latitude").getValue(String.class));
+                    Double lng = Double.valueOf(ds.child("Longitude").getValue(String.class));
+
+                    arrayList.add(new FriendInfo(name,lat,lng,email,imageUrl, userId));
+                }
+
+
+                adapter = new FriendsAdapter(getApplicationContext(),arrayList);
+                recyclerView.setAdapter(adapter);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
     }
 

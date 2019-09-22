@@ -3,24 +3,29 @@ package com.example.android.FriendsFinder.model;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 
-@Entity(tableName = "friends")
 public class FriendInfo {
 
-    @ColumnInfo(name = "name")
     private String name;
 
-    @ColumnInfo(name = "lat")
     private Double lat;
 
-    @ColumnInfo(name = "lng")
     private Double lng;
 
-    @ColumnInfo(name = "email")
     private String email;
 
-    @ColumnInfo(name = "imageUrl")
     private String imageUrl;
 
+    private String userId;
+
+
+    public FriendInfo(String name,Double lat,Double lng,String email, String imageUrl, String userId) {
+        this.imageUrl = imageUrl;
+        this.name = name;
+        this.lat = lat;
+        this.lng = lng;
+        this.email = email;
+        this.userId = userId;
+    }
 
     public FriendInfo(String name,Double lat,Double lng,String email, String imageUrl) {
         this.imageUrl = imageUrl;
@@ -68,5 +73,13 @@ public class FriendInfo {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

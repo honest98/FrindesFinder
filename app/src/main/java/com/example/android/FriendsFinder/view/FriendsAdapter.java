@@ -102,6 +102,8 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.DataView
                 intent.putExtra("friend", mArrayList.get(position).getName());
                 intent.putExtra("lat", mArrayList.get(position).getLat());
                 intent.putExtra("lng", mArrayList.get(position).getLng());
+                intent.putExtra("userId", mArrayList.get(position).getUserId());
+
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
                 try {

@@ -177,6 +177,7 @@ public class SignUp extends AppCompatActivity {
                         map.put("imageUrl",uri.toString());
                         map.put("userName",userName.getText().toString());
                         map.put("email",userEmail.getText().toString());
+                        map.put("userId",user.getUid());
                         myRef.getRef().child(user.getUid()).setValue(map);
 
                     }
